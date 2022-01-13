@@ -24,17 +24,25 @@ services:
     volumes:
       - './certs/rabbitmq:/cert_rabbitmq'
     restart: unless-stopped
-    #db:
-    #image: mysql
-    #restart: always
-    #ports:
-    #  - '13306:${MYSQL_PORT}'
-    #environment:
-    #  MYSQL_DATABASE: '${MYSQL_DATABASE}'
-    #  MYSQL_USER: '${MYSQL_USER}'
-    #  MYSQL_PASSWORD: '${MYSQL_PASSWORD}'
-    #  MYSQL_ROOT_PASSWORD: '${MYSQL_ROOT_PASSWORD}'
-
+  consul:
+    image: 'consul:latest'
+    logging:
+      driver: none
+    expose:
+      - '8300'
+      - '8301'
+      - '8500'
+      - '8600'
+    ports:
+      - '8300:8300'
+      - '8301:8301'
+      - '8301:8301/udp'
+      - '8500:8500'
+      - '8600:8600'
+      - '8600:8600/udp'
+    networks:
+      lb7_network:
+        ipv4_address: '${CONSUL_IP}'
 networks:
   lb7_network:
     driver: bridge
