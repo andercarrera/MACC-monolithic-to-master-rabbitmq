@@ -1,6 +1,7 @@
 version: '3.1'
 services:
   rabbitmq:
+    container_name: rabbitmq
     image: rabbitmq:3.8-management
     environment:
       RABBITMQ_DEFAULT_USER: "${RABBITMQ_USER}"
@@ -24,25 +25,6 @@ services:
     volumes:
       - './certs/rabbitmq:/cert_rabbitmq'
     restart: unless-stopped
-  consul:
-    image: 'consul:latest'
-    logging:
-      driver: none
-    expose:
-      - '8300'
-      - '8301'
-      - '8500'
-      - '8600'
-    ports:
-      - '8300:8300'
-      - '8301:8301'
-      - '8301:8301/udp'
-      - '8500:8500'
-      - '8600:8600'
-      - '8600:8600/udp'
-    networks:
-      lb7_network:
-        ipv4_address: '${CONSUL_IP}'
 networks:
   lb7_network:
     driver: bridge
