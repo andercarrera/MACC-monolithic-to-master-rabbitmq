@@ -18,6 +18,7 @@ services:
     network_mode: "host"
     volumes:
       - './certs/rabbitmq:/cert_rabbitmq'
+    restart: unless-stopped
 networks:
   lb7_network:
     driver: bridge
